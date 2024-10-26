@@ -17,7 +17,10 @@ async function requestData() {
     }
 
     const json = await response.json();
-    console.log(json);
+
+    const data = json["forecasts"][0]["dateLabel"];
+
+    console.log(data);
   } catch (error) {
     console.error(error.message);
   }
