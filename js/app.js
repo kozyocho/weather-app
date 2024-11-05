@@ -1,6 +1,9 @@
 window.onload = function () {
   const requestButton = document.getElementById("js-weather-request");
   requestButton.addEventListener("click", function () {
+    //入力された都市名を取得
+    const cityName = document.getElementById("js-input").value;
+
     //api叩く
     requestData();
   });
@@ -24,4 +27,8 @@ async function requestData() {
   } catch (error) {
     console.error(error.message);
   }
+}
+
+function searchPlace(cityName) {
+  fetch()
 }
