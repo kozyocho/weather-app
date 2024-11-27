@@ -30,5 +30,12 @@ async function requestData() {
 }
 
 function searchPlace(cityName) {
-  fetch()
+  fetch();
 }
+
+/*
+天気予報アプリ作成手順
+1. プルダウンで都市を選択できるようにする
+2. 選択した都市をキーとして該当するidを取得
+3. 取得したidをurlの末尾に入れる
+*/
