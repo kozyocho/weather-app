@@ -1,15 +1,15 @@
 window.onload = function () {
   const requestButton = document.getElementById("js-weather-request");
-  requestButton.addEventListener("click", function () {
-    //入力された都市名を取得
-    //const cityName = document.getElementById("js-input").value;
-
+  requestButton.addEventListener("click", async function () {
     //ドロップダウンメニューの都市のidを取得
     const dropDown = document.getElementById("js-choose-city");
     const cityId = dropDown.value;
 
     //api叩く
-    requestData(cityId);
+    const weatherData = await requestData(cityId);
+
+    //取得したデータをHTMLにする。requestDataが完了するまで実行されない。
+    setDataToHtml(weatherData);
   });
 };
 
@@ -40,22 +40,38 @@ async function requestData(cityId) {
     //最低気温取得
     const minTemp = json.forecasts[0].temperature.min.celsius;
 
-    console.log(cityName);
-    console.log(date);
-    console.log(weatherImage);
-    console.log(maxTemp);
-    console.log(minTemp);
+    console.log(json);
+    return {
+      cityName: cityName,
+      date: date,
+      weatherImage: weatherImage,
+      maxTemp: maxTemp,
+      minTemp: minTemp,
+    };
   } catch (error) {
     console.error(error.message);
+    return null;
   }
 }
 
 //取得したデータをhtml要素に入れる
+function setDataToHtml(weatherData) {
+  var cityNameText = document.getElementById("js-city-name");
+  var dateText = document.getElementById("js-date");
+  var image = document.getElementById("js-weather-image");
+  if (image.querySelector("img")) {
+    var imgElement = image.querySelector("img");
+    image.removeChild(imgElement);
+  } else {
+    var imgElement = document.createElement("img");
+  }
+  var tempText = document.getElementById("js-temp");
 
-/*
-天気予報アプリ作成手順
-1. プルダウンで都市を選択できるようにする　完了
-2. 選択した都市をキーとして該当するidを取得　完了
-3. 取得したidをurlの末尾に入れる 完了
-4. 都市名、日にち、天気画像、最高気温、最低気温を取得
-*/
+  cityNameText.innerText = weatherData.cityName;
+  dateText.innerText = weatherData.date;
+  imageUrl = weatherData.weatherImage;
+  imgElement.src = weatherData.weatherImage;
+  imgElement.alt = "天気のアイコン画像";
+  image.appendChild(imgElement);
+  tempText.innerText = weatherData.maxTemp + " / " + weatherData.minTemp;
+}
