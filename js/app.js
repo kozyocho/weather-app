@@ -15,7 +15,11 @@ window.onload = function () {
 
 async function requestData(cityId) {
   //フェッチするリソースの定義
-  const url = `https://weather.tsukumijima.net/api/forecast/city/${cityId}`;
+  //const url = `https://weather.tsukumijima.net/api/forecast/city/${cityId}`;
+
+  const API_KEY = process.env.OPENWEATHER_API_KEY;
+  //openweatherapi
+  const url = `https://api.openweathermap.org/data/2.5/weather?q={city_name}&units=metric&appid=${API_KEY}`;
 
   try {
     const response = await fetch(url);
