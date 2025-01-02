@@ -1,14 +1,19 @@
+const clearButton = document.getElementById("js-clear-button");
+//入力された文字列を取得
+const inputField = document.getElementById("js-input-city");
+
 window.onload = function () {
   const requestButton = document.getElementById("js-weather-request");
   requestButton.addEventListener("click", async function () {
-    //入力された文字列を取得
-    const inputField = document.getElementById("js-input-city");
     const cityName = inputField.value.trim();
 
     if (!cityName) {
       alert("都市を入力してください。");
       return;
     }
+
+    // バツボタンを表示
+    clearButton.style.display = "block";
 
     // /api/cities にリクエストを送り、サーバー内にある cityName.jsonのデータを受け取っている。
     const lnglat = await searchCitiesOnServer(cityName);
@@ -46,6 +51,11 @@ window.onload = function () {
     }
   });
 };
+
+clearButton.addEventListener("click", () => {
+  inputField.value = ""; // 入力欄をクリア
+  clearButton.style.display = "none"; // バツボタンを非表示
+});
 
 async function searchCitiesOnServer(cityName) {
   try {
