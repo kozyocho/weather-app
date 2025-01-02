@@ -11,7 +11,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+
+//ポート番号を自動割り当て
+const PORT = process.env.PORT || 3000;
 
 // 静的ファイルの配信設定(publicフォルダの中身を公開)
 app.use(express.static(path.join(__dirname, "public")));
@@ -52,7 +54,7 @@ app.get("/weather", async (req, res) => {
     // lnglatをカンマで分割して数値に変換
     const [longitude, latitude] = lnglat.split(",").map(Number);
 
-    // 天気APIのURLを組み立て
+    // 天気APIのURLを作成
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`;
 
     const response = await fetch(url);
