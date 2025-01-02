@@ -80,7 +80,6 @@ async function searchCitiesOnServer(cityName) {
 //取得したデータをhtml要素に入れる
 function setDataToHtml(temperature, icon, cityName) {
   let cityNameText = document.getElementById("js-city-name");
-  //var dateText = document.getElementById("js-date");
   let imageParent = document.getElementById("js-weather-image"); // アイコン画像の親要素
   let imgElement;
 
