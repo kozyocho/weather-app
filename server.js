@@ -33,7 +33,6 @@ app.get("/api/cities", (req, res) => {
   try {
     // cityDataは既に読み込まれているので、直接返すだけ
     res.json(cityData);
-    console.log(res.json);
   } catch (error) {
     console.error("Error returning cityData:", error);
     res.status(500).json({ error: "Failed to fetch city data" });
@@ -50,8 +49,11 @@ app.get("/weather", async (req, res) => {
     // /weather?lnglat=${lnglat}
     const lnglat = req.query.lnglat;
 
+    // lnglatをカンマで分割して数値に変換
+    const [longitude, latitude] = lnglat.split(",").map(Number);
+
     // 天気APIのURLを組み立て
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lnglat[1]}&lon=${lnglat[0]}&units=metric&appid=${API_KEY}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`;
 
     const response = await fetch(url);
     if (!response.ok) {

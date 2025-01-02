@@ -12,6 +12,7 @@ window.onload = function () {
 
     // /api/cities にリクエストを送り、サーバー内にある cityName.jsonのデータを受け取っている。
     const lnglat = await searchCitiesOnServer(cityName);
+    console.log("緯度経度：" + lnglat);
 
     if (!lnglat) {
       alert("一致する都市が見つかりませんでした。");
@@ -29,11 +30,10 @@ window.onload = function () {
         throw new Error("Failed to fetch weather");
       }
       const data = await response.json();
-      console.log("Weather data:", data);
+      //console.log("Weather data:", data);
 
       //気温を取得
       const temperature = data.weather.main.temp;
-      console.log(temperature);
 
       //アイコンを取得
       const weatherIcon = data.weather.weather[0].icon;
